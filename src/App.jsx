@@ -1,6 +1,6 @@
 export default function App() {
   const fecha = new Date().toLocaleString();
-  return(
+  return (
     <main>
       <h1>Hola SENA</h1>
       <h2>Fecha y hora actual: {fecha}</h2>
