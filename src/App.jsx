@@ -27,7 +27,7 @@ export default function App() {
   },
   {
     id: 4,
-    nombre: "Andrés Gómez",
+    nombre: "Michael Jordan",
     telefono: "315 456 7890",
     correo: "andres@sena.edu.co",
     etiqueta: "Aprendiz",
