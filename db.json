@@ -1,0 +1,25 @@
+{
+  "contactos": [
+    {
+      "id": 1,
+      "nombre": "Carolina Pérez",
+      "telefono": "3001234567",
+      "correo": "carolina@gmail.com",
+      "etiqueta": "amiga"
+    },
+    {
+      "id": 3,
+      "nombre": "Luisa Martínez",
+      "telefono": "3025551234",
+      "correo": "luisa@gmail.com",
+      "etiqueta": "familia"
+    },
+    {
+      "nombre": "gustavo",
+      "telefono": "3012494231",
+      "correo": "jeroxyt62@gmail.com",
+      "etiqueta": "instructor",
+      "id": 4
+    }
+  ]
+}
