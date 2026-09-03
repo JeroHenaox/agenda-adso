@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import FormularioContacto from "./components/FormularioContacto";
-import ContactoCard from "./components/ContactoCard";
+import FormularioContacto from "./Components/FormularioContacto";
+import ContactoCard from "./Components/ContactoCard";
 import {
   listarContactos,
   crearContacto,
