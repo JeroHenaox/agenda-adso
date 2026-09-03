@@ -1,8 +1,11 @@
-const API = "http://localhost:3002/contactos";
+// Capa de acceso a la API de Agenda ADSO.
+// Aquí se concentran las peticiones al servidor.
 
-// GET - Listar todos los contactos
+import { API_BASE_URL } from "./config";
+
+// Obtener todos los contactos
 export async function listarContactos() {
-  const res = await fetch(API);
+  const res = await fetch(API_BASE_URL);
 
   if (!res.ok) {
     throw new Error("Error al listar contactos");
@@ -11,14 +14,14 @@ export async function listarContactos() {
   return res.json();
 }
 
-// POST - Crear un nuevo contacto
-export async function crearContacto(data) {
-  const res = await fetch(API, {
+// Crear un nuevo contacto
+export async function crearContacto(nuevoContacto) {
+  const res = await fetch(API_BASE_URL, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(nuevoContacto),
   });
 
   if (!res.ok) {
@@ -28,10 +31,10 @@ export async function crearContacto(data) {
   return res.json();
 }
 
-// DELETE - Eliminar contacto por ID
+// Eliminar un contacto por su ID
 export async function eliminarContactoPorId(id) {
-  const res = await fetch(`${API}/${id}`, {
-    method: "DELETE"
+  const res = await fetch(`${API_BASE_URL}/${id}`, {
+    method: "DELETE",
   });
 
   if (!res.ok) {

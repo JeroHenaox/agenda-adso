@@ -1,60 +1,57 @@
 import { useState, useEffect } from "react";
-import FormularioContacto from "./Components/FormularioContacto";
-import ContactoCard from "./Components/ContactoCard";
+import FormularioContacto from "./components/FormularioContacto";
+import ContactoCard from "./components/ContactoCard";
 import {
   listarContactos,
   crearContacto,
   eliminarContactoPorId,
 } from "./api.js";
+import { APP_INFO } from "./config";
 
 export default function App() {
-  // Estado de los contactos
   const [contactos, setContactos] = useState([]);
-
-  // Estado para mostrar errores al usuario
   const [error, setError] = useState("");
 
-  // GET - Cargar contactos desde JSON Server
+  // Carga los contactos cuando inicia la aplicación.
   useEffect(() => {
     listarContactos()
       .then((data) => setContactos(data))
       .catch((error) => {
         console.error(error);
-
         setError(
           "No se pudieron cargar los contactos. Verifica que el servidor esté funcionando e intenta nuevamente."
         );
       });
   }, []);
 
-  // POST - Agregar contacto
-  const agregarContacto = async (nuevo) => {
+  // Guarda un nuevo contacto mediante la API.
+  const agregarContacto = async (nuevoContacto) => {
     try {
       setError("");
 
-      const contactoCreado = await crearContacto(nuevo);
+      const contactoCreado = await crearContacto(nuevoContacto);
 
       setContactos((prev) => [...prev, contactoCreado]);
     } catch (error) {
       console.error(error);
-
       setError(
         "No se pudo guardar el contacto. Verifica que el servidor esté funcionando e intenta nuevamente."
       );
     }
   };
 
-  // DELETE - Eliminar contacto
+  // Elimina el contacto de la API y actualiza la lista.
   const eliminarContacto = async (id) => {
     try {
       setError("");
 
       await eliminarContactoPorId(id);
 
-      setContactos((prev) => prev.filter((c) => c.id !== id));
+      setContactos((prev) =>
+        prev.filter((contacto) => contacto.id !== id)
+      );
     } catch (error) {
       console.error(error);
-
       setError(
         "No se pudo eliminar el contacto. Verifica que el servidor esté funcionando e intenta nuevamente."
       );
@@ -63,13 +60,21 @@ export default function App() {
 
   return (
     <main className="min-h-screen py-10 px-4">
-      <h1 className="text-4xl font-bold text-center text-purple-600 mb-8">
-        Agenda ADSO v6
-      </h1>
-
       <div className="max-w-4xl mx-auto">
+        <header className="mb-8">
+          <p className="text-xs tracking-[0.3em] text-gray-500 uppercase">
+            Desarrollo Web ReactJS Ficha {APP_INFO.ficha}
+          </p>
 
-        {/* Mensaje de error */}
+          <h1 className="text-4xl font-extrabold text-gray-900 mt-2">
+            {APP_INFO.titulo}
+          </h1>
+
+          <p className="text-sm text-gray-600 mt-1">
+            {APP_INFO.subtitulo}
+          </p>
+        </header>
+
         {error && (
           <div className="mb-4 rounded-xl bg-red-50 border border-red-200 px-4 py-3">
             <p className="text-sm font-medium text-red-700">
@@ -78,22 +83,19 @@ export default function App() {
           </div>
         )}
 
-        {/* Formulario */}
-        <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mb-6">
+        <section className="mb-8">
           <FormularioContacto onAgregar={agregarContacto} />
         </section>
 
-        {/* Lista de contactos */}
         <section className="space-y-4">
-          {contactos.map((c) => (
+          {contactos.map((contacto) => (
             <ContactoCard
-              key={c.id}
-              {...c}
-              onEliminar={() => eliminarContacto(c.id)}
+              key={contacto.id}
+              {...contacto}
+              onEliminar={() => eliminarContacto(contacto.id)}
             />
           ))}
         </section>
-
       </div>
     </main>
   );
